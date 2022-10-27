@@ -12,7 +12,7 @@ class DataController extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * My Informations
+     * My Information
      *
     */
     public function getMyInfo()
