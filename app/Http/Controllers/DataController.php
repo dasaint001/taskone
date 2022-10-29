@@ -17,16 +17,11 @@ class DataController extends BaseController
     */
     public function getMyInfo()
     {
-        $myInfo = [
+        return response()->json([
             'slackUsername'  => 'Yii',
             'backend' => true,
             'age' => 30,
-            'bio' => 'I am a fast learner with I can do spirit. I love learning and always want to help solve problems.' 
-        ];
-
-        return response()->json([
-            'status'    => true,
-            'my_info'   => $myInfo
+            'bio' => 'I am a fast learner with I can do spirit. I love learning and always want to help solve problems.',
         ], 200);
     }
 }
