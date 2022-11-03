@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\StageTwoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get( '/my-info', [DataController::class, 'getMyInfo'] );
+Route::post( '/calculate', [StageTwoController::class, 'arithmetic'] );
 
