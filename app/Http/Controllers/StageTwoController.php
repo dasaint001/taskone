@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use App\Http\Requests\StageTwoRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -17,13 +18,21 @@ class StageTwoController extends Controller
      * My Information
      *
     */
-    public function arithmetic(Request $request)
+    public function arithmetic(StageTwoRequest $request)
     {
+        $validation = function ($attribute, $value, $fail) {
+            if (!is_int($value)) {
+                $fail( $attribute.' must be an integer.');
+            }
+        };
+
         $rules = [
-            'x' => 'required|numeric',
+            'x' => ['integer', $validation],
             'operation_type' => 'required|in:addition,subtraction,multiplication',
-            'y' => 'required|numeric',
+            'y' => ['integer', $validation],
+            
         ];
+
 
         $validator = \Validator::make($request->all(), $rules);
 
@@ -32,26 +41,26 @@ class StageTwoController extends Controller
         }
 
         $operationType = $request->input('operation_type');
-        $result = '';
-        $x = $request->x ?? 0;
-        $y = $request->y ?? 0;
+        $result = (int)'';
+        $x = $request->x ?? '';
+        $y = $request->y ?? '';
 
         if($operationType === 'addition' ){
-            $result = $x + $y;
+            $result = (int)$x + (int)$y;
         }
 
         if($operationType === 'subtraction' ){
-            $result = $x - $y;
+            $result = (int)$x - (int)$y;
         }
 
         if($operationType === 'multiplication' ){
-            $result = $x * $y;
+            $result = (int)$x * (int)$y;
         }
 
 
         return response()->json([
-            'slackUserName' => 'Yii',
-            'result' => $result ?? 0,
+            'slackUsername' => 'Yii',
+            'result' => $result,
             'operation_type' => $operationType
         ], 200);
     }
